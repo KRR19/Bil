@@ -6,13 +6,15 @@ using System.Text;
 
 namespace DataLayer.ApplicationContext
 {
-    public class ApplicationContext: DbContext
+    public class AppContext : DbContext
     {
-        public DbSet<Product> Products{ get; set; }
+        public DbSet<Product> Products { get; set; }
         public DbSet<Category> Categories { get; set; }
-        public ApplicationContext(DbContextOptions optionsBuilder) : base(optionsBuilder)
+        public AppContext(DbContextOptions optionsBuilder) : base(optionsBuilder)
         {
 
         }
+
+       
     }
 }
