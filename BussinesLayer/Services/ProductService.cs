@@ -1,11 +1,9 @@
 ﻿using BussinesLayer.Models;
 using BussinesLayer.Services.Interfaces;
 using DataLayer.Entities;
-using DataLayer.Repository.Implementation;
 using DataLayer.Repository.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace BussinesLayer.Services
@@ -22,7 +20,7 @@ namespace BussinesLayer.Services
             Product product = new Product();
             ResponseModel response = ProductValidation(productModel);
 
-            if(!response.IsValid)
+            if (!response.IsValid)
             {
                 return response;
             }
@@ -32,7 +30,7 @@ namespace BussinesLayer.Services
 
             bool isCreate = await _productRepository.Create(product);
 
-            if(!isCreate)
+            if (!isCreate)
             {
                 response.IsValid = false;
                 response.Message = "Sorry, the product could not be created.";
@@ -56,7 +54,7 @@ namespace BussinesLayer.Services
 
             bool isDelete = await _productRepository.Delete(product);
 
-            if(!isDelete)
+            if (!isDelete)
             {
                 response.IsValid = false;
                 response.Message = "Item not deleted";
@@ -74,7 +72,7 @@ namespace BussinesLayer.Services
             List<Product> product = _productRepository.GetAll();
             List<ProductModel> productModels = new List<ProductModel>();
 
-            foreach(var item in product)
+            foreach (var item in product)
             {
                 ProductModel productModel = new ProductModel
                 {
@@ -135,7 +133,7 @@ namespace BussinesLayer.Services
 
             productModel.Name.Trim();
 
-            if(string.IsNullOrEmpty(productModel.Name))
+            if (string.IsNullOrEmpty(productModel.Name))
             {
                 response.IsValid = false;
                 response.Message = "Product тame сannot иe empty";
