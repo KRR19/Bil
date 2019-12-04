@@ -25,7 +25,7 @@ namespace DataLayer.Repository.Implementation
 
         public Category GetById(Guid id)
         {
-            Category category = _context.Categories.Where(x => x.Id == id).FirstOrDefault();
+            Category category = _context.Categories.Find(id);
 
             return category;
         }

@@ -107,6 +107,7 @@ namespace BussinesLayer.Services
                 return response;
             }
 
+            category.Id = categoryModel.Id;
             category.Name = categoryModel.Name;
 
             bool isCreate = await _categoryRepository.Update(category);
@@ -137,7 +138,7 @@ namespace BussinesLayer.Services
                 return response;
             }            
 
-            return new ResponseModel();
+            return new ResponseModel() { IsValid = true};
         }
     }
 }

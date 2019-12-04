@@ -1,1 +1,39 @@
-<p>product works!</p>
+<input type="text" [(ngModel)]="productNameInput" placeholder="product name:" (focus)="message =''">
+<mat-select placeholder="category:" [(value)]="selectedCategory" (focus)="message =''">
+  <mat-option *ngFor="let category of allCategorys" [value]="category.id">{{category.name}}</mat-option>
+</mat-select>
+<button (click)="AddProduct()">Add product</button>
+<button (click)="editProduct()">Edit</button>
+<button (click)="deleteProduct()">Delete</button>
+<a routerLink="category">Categorys</a>
+
+<strong>{{message}}</strong>
+<div class="mat-elevation-z8">
+
+  <table mat-table [dataSource]="dataSource">
+    <ng-container matColumnDef="Id">
+      <th mat-authService-cell *matHeaderCellDef>Id</th>
+      <td mat-cell *matCellDef="let element">
+        <a (click)="selectProduct(element)">{{element.id}}</a>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Name">
+      <th mat-authService-cell *matHeaderCellDef>Name</th>
+      <td mat-cell *matCellDef="let element">
+        <a (click)="selectProduct(element)">{{element.name}}</a>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Category">
+      <th mat-authService-cell *matHeaderCellDef>Category</th>
+      <td mat-cell *matCellDef="let element">
+        <a (click)="selectProduct(element)">{{element.category.name}}</a>
+      </td>
+    </ng-container>
+
+    <tr mat-authService-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+  <mat-paginator [pageSizeOptions]="[5, 10, 20]"></mat-paginator>
+</div>

@@ -11,9 +11,11 @@ namespace BussinesLayer.Services
     public class ProductService : IProductService
     {
         private readonly IProductRepository _productRepository;
-        public ProductService(IProductRepository productRepository)
+        private readonly ICategoryRepository _categoryRepository;
+        public ProductService(IProductRepository productRepository, ICategoryRepository categoryRepository)
         {
             _productRepository = productRepository;
+            _categoryRepository = categoryRepository;
         }
         public async Task<ResponseModel> Create(ProductModel productModel)
         {
@@ -26,7 +28,7 @@ namespace BussinesLayer.Services
             }
 
             product.Name = productModel.Name;
-            product.Category.Name = productModel.Category;
+            product.Category = _categoryRepository.GetById(productModel.Category.Id);
 
             bool isCreate = await _productRepository.Create(product);
 
@@ -50,7 +52,7 @@ namespace BussinesLayer.Services
 
             product.Id = item.Id;
             product.Name = item.Name;
-            product.Category.Name = item.Category;
+            product.Category = _categoryRepository.GetById(item.Category.Id);
 
             bool isDelete = await _productRepository.Delete(product);
 
@@ -74,11 +76,12 @@ namespace BussinesLayer.Services
 
             foreach (var item in product)
             {
+                CategoryModel category = new CategoryModel() { Id = item.Category.Id, Name = item.Category.Name };
                 ProductModel productModel = new ProductModel
                 {
                     Id = item.Id,
                     Name = item.Name,
-                    Category = item.Category.Name
+                    Category = category
                 };
 
                 productModels.Add(productModel);
@@ -94,7 +97,7 @@ namespace BussinesLayer.Services
 
             productModel.Id = product.Id;
             productModel.Name = product.Name;
-            productModel.Category = product.Category.Name;
+            productModel.Category = new CategoryModel() { Id = product.Category.Id, Name = product.Category.Name };
 
             return productModel;
         }
@@ -108,9 +111,10 @@ namespace BussinesLayer.Services
             {
                 return response;
             }
-
+            product.Id = productModel.Id;
             product.Name = productModel.Name;
-            product.Category.Name = productModel.Category;
+            product.Category = _categoryRepository.GetById(productModel.Category.Id);
+            product.Category.Id = productModel.Category.Id;
 
             bool isCreate = await _productRepository.Update(product);
 
@@ -139,15 +143,8 @@ namespace BussinesLayer.Services
                 response.Message = "Product тame сannot иe empty";
                 return response;
             }
-
-            if (string.IsNullOrEmpty(productModel.Category))
-            {
-                response.IsValid = false;
-                response.Message = "Product cannot be without category";
-                return response;
-            }
-
-            return new ResponseModel();
+                        
+            return new ResponseModel() { IsValid = true};
         }
     }
 }

@@ -6,6 +6,6 @@ namespace BussinesLayer.Models
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
-        public string Category { get; set; }
+        public CategoryModel Category { get; set; }
     }
 }
