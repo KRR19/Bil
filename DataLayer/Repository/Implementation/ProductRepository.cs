@@ -1,17 +1,15 @@
-﻿using DataLayer.Repository.Interfaces;
+﻿using DataLayer.Entities;
+using DataLayer.Repository.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.Text;
-using DataLayer.ApplicationContext;
-using AppContext = DataLayer.ApplicationContext.AppContext;
-using DataLayer.Entities;
 using System.Linq;
-using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
+using AppContext = DataLayer.ApplicationContext.AppContext;
 
 namespace DataLayer.Repository.Implementation
 {
-    public class ProductRepository: IProductRepository
+    public class ProductRepository : IProductRepository
     {
         private readonly AppContext _context;
         public ProductRepository(AppContext context)
@@ -45,7 +43,7 @@ namespace DataLayer.Repository.Implementation
         {
             _context.Products.Update(product);
             await _context.SaveChangesAsync();
-            
+
             return true;
         }
 

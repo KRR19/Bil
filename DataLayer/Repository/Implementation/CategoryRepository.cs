@@ -3,13 +3,12 @@ using DataLayer.Repository.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using AppContext = DataLayer.ApplicationContext.AppContext;
 
 namespace DataLayer.Repository.Implementation
 {
-    public class CategoryRepository: ICategoryRepository
+    public class CategoryRepository : ICategoryRepository
     {
         private readonly AppContext _context;
         public CategoryRepository(AppContext context)
